@@ -22,7 +22,6 @@ class EventManager{
         if(!cb){
             delete this.events[eName];
         }
-
     }
 
     trigger(eName, ...cb){
