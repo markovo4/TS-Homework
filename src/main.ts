@@ -1,7 +1,3 @@
-interface filterByPropertyFn {
-    <T, K extends keyof T>(array: T[], property: K, value: T[K]): T[]
-}
-
 type User = {
     id: number;
     name: string;
@@ -9,8 +5,12 @@ type User = {
     isActive: boolean;
 };
 
-const filterByProperty: filterByPropertyFn = function(array, key, value){
-    return array.filter((obj) => obj[key] === value)
+const filterByProperty = <T, K extends keyof T>(array: T[], key: K, value: T[K]): T[] => {
+    const newArray: T[] = []
+    array.forEach((obj)=>{
+        obj[key] === value && newArray.push(obj)
+    })
+    return newArray;
 }
 
 const users: User[] = [
