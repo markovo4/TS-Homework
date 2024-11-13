@@ -1,15 +1,17 @@
 import {
-    EnumOperator,
     TypeAddTodoFn,
     TypeAppConfig,
     TypeAppConfigFn,
     TypeCalculatorFn,
     TypeFormatUserFn,
     TypeGetColorHex,
+    TypePerson,
+    TypePrintPersonInfoFn,
     TypeSumArray,
     TypeTodo
 } from "./types/types.ts";
-import {EnumRgb} from "./enums/enums.ts";
+import {EnumOperator, EnumRgb} from "./enums/enums.ts";
+import {IDeepCheckFn, IDeepStructure, IGetKeyFn} from "./interfaces/interfaces.ts";
 
 
 const formatUser: TypeFormatUserFn = (firstName, lastName, middleName) => {
@@ -101,5 +103,53 @@ const addTodo: TypeAddTodoFn = (todosList, singleTodo) => {
     }
 }
 
-
 console.log(addTodo(todos, todo))
+
+
+const person1: TypePerson = {
+    name: 'Vlad',
+    age: 21,
+    nickname: 'Shaitan'
+}
+const person2: TypePerson = {
+    name: 'Vova',
+    age: 21,
+}
+
+
+const printPersonInfo: TypePrintPersonInfoFn = (pers) => {
+    console.log(pers.name, pers.age, pers.nickname ?? '')
+}
+
+printPersonInfo(person1)
+printPersonInfo(person2)
+
+
+//Task 9
+
+const getKey: IGetKeyFn = (pers, key) => {
+    return pers[key]
+}
+
+console.log(getKey(person2, 'age'))
+
+
+//Task 10
+
+const deepObj: IDeepStructure = {id: 1, details: {name: 'string', active: true}}
+const deepObj2: IDeepStructure = {id: 1, details: {active: true}}
+
+const deepCheck: IDeepCheckFn = (obj) => {
+    if (typeof obj !== 'object' || obj === null) return false;
+
+    const {id, details} = obj as Record<string, unknown>;
+
+    const {name, active} = details as Record<string, unknown>;
+
+    return typeof id === 'number' &&
+        typeof name === 'string' &&
+        typeof active === 'boolean'
+}
+
+console.log(deepCheck(deepObj))
+console.log(deepCheck(deepObj2))
