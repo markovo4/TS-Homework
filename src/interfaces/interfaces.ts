@@ -10,3 +10,9 @@ export interface IDeepStructure {
 export interface IDeepCheckFn {
     (obj: unknown): boolean;
 }
+
+export interface Example {
+    age: number;
+    title: string;
+    mature: boolean;
+}

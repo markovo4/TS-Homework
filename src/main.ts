@@ -1,4 +1,5 @@
 import {
+    OmitByType,
     TypeAddTodoFn,
     TypeAppConfig,
     TypeAppConfigFn,
@@ -11,7 +12,7 @@ import {
     TypeTodo
 } from "./types/types.ts";
 import {EnumOperator, EnumRgb} from "./enums/enums.ts";
-import {IDeepCheckFn, IDeepStructure, IGetKeyFn} from "./interfaces/interfaces.ts";
+import {Example, IDeepCheckFn, IDeepStructure, IGetKeyFn} from "./interfaces/interfaces.ts";
 
 
 const formatUser: TypeFormatUserFn = (firstName, lastName, middleName) => {
@@ -153,3 +154,15 @@ const deepCheck: IDeepCheckFn = (obj) => {
 
 console.log(deepCheck(deepObj))
 console.log(deepCheck(deepObj2))
+
+
+//Task 11
+
+const obj: OmitByType<Example, string> = {
+    age: 12,
+    mature: false,
+}
+
+console.log(obj)
+
+//Task 12
