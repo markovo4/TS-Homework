@@ -12,7 +12,14 @@ import {
     TypeTodo
 } from "./types/types.ts";
 import {EnumOperator, EnumRgb} from "./enums/enums.ts";
-import {Example, IDeepCheckFn, IDeepStructure, IGetKeyFn} from "./interfaces/interfaces.ts";
+import {
+    Example,
+    IDeepCheckFn,
+    IDeepStructure,
+    IFilterByProperty,
+    IGetKeyFn,
+    IMathOperation
+} from "./interfaces/interfaces.ts";
 
 
 const formatUser: TypeFormatUserFn = (firstName, lastName, middleName) => {
@@ -166,3 +173,52 @@ const obj: OmitByType<Example, string> = {
 console.log(obj)
 
 //Task 12
+
+const mathOperation: IMathOperation = (a, b, operation) => {
+    switch (operation) {
+        case 'add':
+            return a + b;
+        case 'subtract':
+            return a - b;
+        case 'multiply':
+            return a * b;
+        case 'divide':
+            if (b === 0) throw new Error('Division by zero is not allowed');
+            return a / b;
+        default:
+            throw new Error('Incorrect math operation');
+    }
+}
+
+console.log(mathOperation(2, 2, 'add'))
+console.log(mathOperation(8, 4, 'subtract'))
+console.log(mathOperation(2, 2, 'multiply'))
+console.log(mathOperation(8, 2, 'divide'))
+
+
+//Task 6
+
+const person3: TypePerson = {
+    name: 'Vova',
+    age: 21,
+}
+
+const person4: TypePerson = {
+    name: 'Vova',
+    age: 21,
+    nickname: 'str'
+}
+
+const person5: TypePerson = {
+    name: 'Vova',
+    age: 21,
+}
+
+const people: TypePerson[] = [person3, person4, person5]
+
+
+const filterByProperty: IFilterByProperty = (people, key) => {
+    return people.filter((element) => !!element[key])
+}
+
+console.log(filterByProperty(people, 'nickname'))
