@@ -8,6 +8,7 @@ import {
     TypeGetColorHex,
     TypePerson,
     TypePrintPersonInfoFn,
+    TypeStringTuple,
     TypeSumArray,
     TypeTodo
 } from "./types/types.ts";
@@ -18,7 +19,8 @@ import {
     IDeepStructure,
     IFilterByProperty,
     IGetKeyFn,
-    IMathOperation
+    IMathOperation,
+    ITupleToObject
 } from "./interfaces/interfaces.ts";
 
 
@@ -196,7 +198,7 @@ console.log(mathOperation(2, 2, 'multiply'))
 console.log(mathOperation(8, 2, 'divide'))
 
 
-//Task 6
+//Task 13
 
 const person3: TypePerson = {
     name: 'Vova',
@@ -222,3 +224,18 @@ const filterByProperty: IFilterByProperty = (people, key) => {
 }
 
 console.log(filterByProperty(people, 'nickname'))
+
+
+//Task 14
+
+const tuple: TypeStringTuple = ['pineapple', 'pear', 'banana', 'tomato']
+
+const tupleToObject: ITupleToObject = (tuple) => {
+    const object: Record<string, boolean> = {}
+    tuple.forEach((element) => {
+        object[element] = true;
+    })
+    return object
+}
+
+console.log(tupleToObject(tuple))

@@ -23,3 +23,5 @@ export type TypePrintPersonInfoFn = (person: TypePerson) => void;
 export type OmitByType<T, U> = { [P in keyof T as T[P] extends U ? never : P]: T[P] }
 
 export type Operation = 'add' | 'subtract' | 'multiply' | 'divide';
+
+export type TypeStringTuple = [...string[]]

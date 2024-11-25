@@ -1,4 +1,4 @@
-import {Operation} from "../types/types.ts";
+import {Operation, TypeStringTuple} from "../types/types.ts";
 
 export interface IGetKeyFn {
     <T, K extends keyof T>(obj: T, key: K): T[K];
@@ -25,4 +25,8 @@ export interface IMathOperation {
 
 export interface IFilterByProperty {
     <T, k extends keyof T>(array: T[], key: k): unknown;
+}
+
+export interface ITupleToObject {
+    (tuple: TypeStringTuple): Record<string, boolean>
 }
