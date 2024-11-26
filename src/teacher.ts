@@ -12,9 +12,7 @@ export class Teacher extends User implements ITeacher {
     }
 
     validate(): boolean {
-        const isUserValid = super.validate();
-        if (!Array.isArray(this.courses)) throw new Error("Subjects must be an array.");
-        return isUserValid;
+        return super.validate();
     }
 
 }
