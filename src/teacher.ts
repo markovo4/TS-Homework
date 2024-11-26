@@ -1,15 +1,20 @@
-import {ITeacher} from "./interfaces.ts";
+import {ICourse, ITeacher} from "./interfaces.ts";
 import {User} from "./user.ts";
 
 export class Teacher extends User implements ITeacher {
-    public subjects: string[]
+    public courses: ICourse[] = [];
 
-    constructor(name: string, email: string, password: string, subjects: string[]) {
-        super(name, email, password);
-        this.subjects = subjects;
+    addCourse(newCourse: ICourse): void {
+        if (this.courses.find((course: ICourse) => course.name === newCourse.name)) {
+            throw new Error(`The course "${newCourse.name}" already exists.`);
+        }
+        this.courses.push(newCourse);
     }
 
-    public addSubject(subject: string): void {
-        this.subjects = [...this.subjects, subject]
+    validate(): boolean {
+        const isUserValid = super.validate();
+        if (!Array.isArray(this.courses)) throw new Error("Subjects must be an array.");
+        return isUserValid;
     }
+
 }

@@ -9,19 +9,22 @@ export interface IUser {
 }
 
 export interface IStudent extends IUser {
-    courses: string[];
+    courses: ICourse[];
+
+    enroll(newCourse: ICourse): void;
 
     validate(): boolean;
 }
 
 export interface ITeacher extends IUser {
-    subjects: string[];
+    courses: ICourse[];
+
+    addCourse(newCourse: ICourse): void;
 
     validate(): boolean;
 }
 
 export interface ICourse {
-    id: string;
     name: string;
     teacher: Teacher;
 
