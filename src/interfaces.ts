@@ -1,9 +1,9 @@
 import {Teacher} from "./teacher.ts";
 
 export interface IUser {
-    id: string;
     name: string;
     email: string;
+
 
     validate(): boolean;
 }
