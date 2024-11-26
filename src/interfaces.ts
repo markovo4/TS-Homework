@@ -1,4 +1,5 @@
 import {Teacher} from "./teacher.ts";
+import {Student} from "./student.ts";
 
 export interface IUser {
     name: string;
@@ -30,9 +31,7 @@ export interface ICourse {
 
     validate(): boolean;
 
-    addStudent(newStudent: IStudent): void;
-
-    listStudents(): IStudent[];
+    addStudent(newStudent: Student): void;
 }
 
 export interface ICourseManager {
