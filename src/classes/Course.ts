@@ -33,14 +33,21 @@ export class Course extends BaseModal implements ICourse {
         if (this.students.some((student: Student) => student.userId === newStudent.userId)) {
             throw new Error(`Student with ID ${newStudent.userId} already exists.`);
         }
+
+        if (!(newStudent.courses).includes(this.courseId as unknown as ICourse)) {
+            newStudent.enroll(this)
+        }
         this.students.push(newStudent);
     }
 
-    removeStudent(studentId: string): void {
-        this.students = this.students.filter((student: Student) => student.userId !== studentId);
+    validate(): boolean {
+        if (!this.teacher.courses.includes(this.courseId as unknown as ICourse)) {
+            this.teacher.addCourse(this)
+        }
+        return (this.name.trim() !== '' && this.courseId !== '');
     }
 
-    validate(): boolean {
-        return (this.name.trim() !== '' && this.courseId !== '');
+    protected removeStudent(studentId: string): void {
+        this.students = this.students.filter((student: Student) => student.userId !== studentId);
     }
 }

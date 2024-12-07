@@ -5,8 +5,8 @@ import {User} from "./User.ts";
 import {Student} from "./Student.ts";
 
 export class CourseManager implements ICourseManager {
-    public users: User[] = [];
-    public courses: Course[] = [];
+    protected users: User[] = [];
+    protected courses: Course[] = [];
 
     constructor(users: User[], courses: Course[]) {
         this.users = users;
@@ -46,7 +46,7 @@ export class CourseManager implements ICourseManager {
             throw new Error(`Course with ID ${courseId} not found.`);
         }
 
-        const teacher = this.users.find((u) => u.userId === teacherId && 'subjects' in u);
+        const teacher = this.users.find((u) => u.userId === teacherId);
         if (!teacher) {
             throw new Error(`Teacher with ID ${teacherId} not found.`);
         }
@@ -60,7 +60,7 @@ export class CourseManager implements ICourseManager {
             throw new Error(`Course with ID ${courseId} not found.`);
         }
 
-        const student = this.users.find((u: User) => u.userId === studentId && 'subjects' in u);
+        const student = this.users.find((u: User) => u.userId === studentId);
         if (!student) {
             throw new Error(`Student with ID ${studentId} not found.`);
         }

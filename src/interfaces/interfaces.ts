@@ -33,8 +33,6 @@ export interface ICourse {
 }
 
 export interface ICourseManager {
-    users: Array<IUser>;
-    courses: Array<ICourse>;
 
     addUser(user: IStudent | ITeacher): void;
 
