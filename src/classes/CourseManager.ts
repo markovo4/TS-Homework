@@ -1,8 +1,8 @@
-import {ICourseManager} from "./interfaces.ts";
-import {Teacher} from "./teacher.ts";
-import {Course} from "./course.ts";
-import {User} from "./user.ts";
-import {Student} from "./student.ts";
+import {ICourseManager} from "../interfaces/interfaces.ts";
+import {Teacher} from "./Teacher.ts";
+import {Course} from "./Course.ts";
+import {User} from "./User.ts";
+import {Student} from "./Student.ts";
 
 export class CourseManager implements ICourseManager {
     public users: User[] = [];
@@ -16,10 +16,10 @@ export class CourseManager implements ICourseManager {
     static generateReport(courses: Course[]): string {
         return courses
             .map((course) => {
-                const teacherInfo = `Teacher: ${course.teacher.name} (${course.teacher.email})`;
+                const teacherInfo = `Teacher: ${course.teacher.name} (${course.teacher.emailAddress})`;
                 const studentList = course
                     .listStudents
-                    .map((student) => ` - ${student.name} (${student.email})`)
+                    .map((student) => ` - ${student.name} (${student.emailAddress})`)
                     .join('\n');
                 return `Course: ${course.name} (ID: ${course.courseId})\n${teacherInfo}\nStudents:\n${studentList || 'No students enrolled'}`;
             })

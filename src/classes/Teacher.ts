@@ -1,11 +1,10 @@
-import {ICourse, IStudent} from "./interfaces.ts";
-import {User} from "./user.ts";
+import {ICourse, ITeacher} from "../interfaces/interfaces.ts";
+import {User} from "./User.ts";
 
-export class Student extends User implements IStudent {
+export class Teacher extends User implements ITeacher {
     public courses: ICourse[] = [];
 
-
-    enroll(newCourse: ICourse): void {
+    addCourse(newCourse: ICourse): void {
         if (this.courses.find((course: ICourse) => course.name === newCourse.name)) {
             throw new Error(`The course "${newCourse.name}" already exists.`);
         }
@@ -13,7 +12,7 @@ export class Student extends User implements IStudent {
     }
 
     validate(): boolean {
-        const isUserValid = super.validate();
-        return isUserValid;
+        return super.validate();
     }
+
 }

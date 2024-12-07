@@ -1,7 +1,7 @@
 export abstract class BaseModal {
     public createdAt: Date;
 
-    constructor() {
+    protected constructor() {
         this.createdAt = new Date;
     }
 

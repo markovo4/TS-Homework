@@ -1,7 +1,7 @@
-import {Student} from "./student.ts";
-import {Teacher} from "./teacher.ts";
-import {Course} from "./course.ts";
-import {CourseManager} from "./courseManager.ts";
+import {Student} from "./classes/Student.ts";
+import {Teacher} from "./classes/Teacher.ts";
+import {Course} from "./classes/Course.ts";
+import {CourseManager} from "./classes/CourseManager.ts";
 
 const student1 = new Student('Vlad', 'obf2007@gmail.com', '147369!')
 const teacher1 = new Teacher('Vova', 'obf2007@gmail.com', '147369!')

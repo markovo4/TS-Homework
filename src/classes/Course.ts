@@ -1,12 +1,12 @@
-import {ICourse} from "./interfaces.ts";
-import {Teacher} from "./teacher.ts";
-import {Student} from "./student.ts";
-import {BaseModal} from "./baseModal.ts";
+import {ICourse} from "../interfaces/interfaces.ts";
+import {Teacher} from "./Teacher.ts";
+import {Student} from "./Student.ts";
+import {BaseModal} from "./BaseModal.ts";
 
 export class Course extends BaseModal implements ICourse {
     public name: string;
     public teacher: Teacher;
-    private id: string;
+    readonly id: string;
     private students: Student[] = [];
 
     constructor(name: string, teacher: Teacher) {

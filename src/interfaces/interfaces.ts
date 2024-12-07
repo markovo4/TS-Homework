@@ -1,9 +1,8 @@
-import {Teacher} from "./teacher.ts";
-import {Student} from "./student.ts";
+import {Teacher} from "../classes/Teacher.ts";
+import {Student} from "../classes/Student.ts";
 
 export interface IUser {
     name: string;
-    email: string;
 
     validate(): boolean;
 }
