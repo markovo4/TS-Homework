@@ -16,7 +16,6 @@ export interface IStudent extends IUser {
 }
 
 export interface ITeacher extends IUser {
-    courses: ICourse[];
 
     addCourse(newCourse: ICourse): void;
 

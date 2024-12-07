@@ -5,5 +5,5 @@ export abstract class BaseModal {
         this.createdAt = new Date;
     }
 
-    abstract validate(): boolean;
+    protected abstract validate(): boolean;
 }

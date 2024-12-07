@@ -35,19 +35,23 @@ export class Course extends BaseModal implements ICourse {
         }
 
         if (!(newStudent.courses).includes(this.courseId as unknown as ICourse)) {
-            newStudent.enroll(this)
+            Student.isStudent(newStudent) && newStudent.enroll(this)
         }
         this.students.push(newStudent);
     }
 
     validate(): boolean {
-        if (!this.teacher.courses.includes(this.courseId as unknown as ICourse)) {
-            this.teacher.addCourse(this)
+        if (!this.teacher.courseList.includes(this.courseId as unknown as ICourse)) {
+            Teacher.isTeacher(this.teacher) && this.teacher.addCourse(this)
         }
         return (this.name.trim() !== '' && this.courseId !== '');
     }
 
-    protected removeStudent(studentId: string): void {
-        this.students = this.students.filter((student: Student) => student.userId !== studentId);
+    protected removeStudent(student: Student): void {
+        if (!Student.isStudent(student)) return;
+        const {id: studentId} = student;
+
+        const studentIndex = this.students.findIndex(id => id.userId === studentId);
+        this.students.splice(studentIndex, 1);
     }
 }
