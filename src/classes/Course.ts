@@ -20,7 +20,7 @@ export class Course extends BaseModal implements ICourse {
     get courseId() {
         return this.id;
     }
-
+ 
     get listStudents() {
         return this.students;
     }
