@@ -4,54 +4,60 @@ import {Student} from "./Student.ts";
 import {BaseModal} from "./BaseModal.ts";
 
 export class Course extends BaseModal implements ICourse {
-    public name: string;
-    public teacher: Teacher;
-    readonly id: string;
-    private students: Student[] = [];
+    private static currentId: number = 1;
+    name: string;
+    teacher: Teacher;
+    readonly courseId: number;
+    private studentsList: Student[] = [];
 
     constructor(name: string, teacher: Teacher) {
         super();
-        this.id = Course.generateId();
+        this.courseId = Course.generateId();
         this.name = name;
         this.teacher = teacher;
         this.validate();
     }
 
-    get courseId() {
-        return this.id;
-    }
- 
-    get listStudents() {
-        return this.students;
+    get id() {
+        return this.courseId;
     }
 
-    private static generateId(): string {
-        return Math.random().toString(36).substring(2, 9);
+    get students() {
+        return [...this.studentsList];
     }
 
-    addStudent(newStudent: Student): void {
-        if (this.students.some((student: Student) => student.userId === newStudent.userId)) {
-            throw new Error(`Student with ID ${newStudent.userId} already exists.`);
-        }
+    private static generateId(): number {
+        return Course.currentId++;
+    }
 
-        if (!(newStudent.courses).includes(this.courseId as unknown as ICourse)) {
-            Student.isStudent(newStudent) && newStudent.enroll(this)
-        }
-        this.students.push(newStudent);
+    addStudent(newStudent: Student[]): number {
+        newStudent.forEach((student) => {
+            if (this.students.some((s: Student) => s.id === student.id)) {
+                throw new Error(`Student with ID ${student.id} already exists.`);
+            } else if (!(student.courses).includes(this.id as unknown as Course)) {
+                Student.isStudent(student) && student.enroll([this])
+            }
+            this.students.push(student);
+        })
+        return this.students.length;
     }
 
     validate(): boolean {
-        if (!this.teacher.courseList.includes(this.courseId as unknown as ICourse)) {
-            Teacher.isTeacher(this.teacher) && this.teacher.addCourse(this)
+        if (!this.teacher.courses.includes(this.courseId as unknown as Course)) {
+            Teacher.isTeacher(this.teacher) && this.teacher.addCourse([this])
         }
-        return (this.name.trim() !== '' && this.courseId !== '');
+        return (this.name.trim() !== '');
     }
 
-    protected removeStudent(student: Student): void {
-        if (!Student.isStudent(student)) return;
-        const {id: studentId} = student;
+    removeStudent(studentInstance: Student[]): number {
+        studentInstance.forEach((student) => {
+            if (!Student.isStudent(student)) return;
+            const {id: studentId} = student;
 
-        const studentIndex = this.students.findIndex(id => id.userId === studentId);
-        this.students.splice(studentIndex, 1);
+            const studentIndex = this.students.findIndex(s => s.id === studentId);
+            this.students.splice(studentIndex, 1);
+        })
+        return this.students.length
+
     }
 }

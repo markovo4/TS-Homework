@@ -1,45 +1,55 @@
 import {Teacher} from "../classes/Teacher.ts";
 import {Student} from "../classes/Student.ts";
+import {Course} from "../classes/Course.ts";
+import {User} from "../classes/User.ts";
 
-export interface IUser {
-    name: string;
+export interface IBaseModal {
+    createdAt: Date;
 
     validate(): boolean;
+}
+
+export interface IUser extends IBaseModal {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
 }
 
 export interface IStudent extends IUser {
-    courses: ICourse[];
+    courses: Course[];
 
-    enroll(newCourse: ICourse): void;
-
-    validate(): boolean;
+    enroll(newCourse: Course[]): number;
 }
 
 export interface ITeacher extends IUser {
+    courses: Course[];
 
-    addCourse(newCourse: ICourse): void;
-
-    validate(): boolean;
+    addCourse(newCourse: Course[]): number;
 }
 
-export interface ICourse {
+export interface ICourse extends IBaseModal {
     name: string;
     teacher: Teacher;
+    id: number;
+    students: Student[];
 
-    validate(): boolean;
+    addStudent(newStudent: Student[]): number;
 
-    addStudent(newStudent: Student): void;
+    removeStudent(studentInstance: Student[]): number;
 }
 
 export interface ICourseManager {
+    users: User[];
+    courses: Course[];
 
-    addUser(user: IStudent | ITeacher): void;
+    addUser(user: User[]): number;
 
-    addCourse(course: ICourse): void;
+    addCourse(course: ICourse[]): number;
 
-    assignTeacherToCourse(courseId: string, teacherId: string): void;
+    assignTeacherToCourse(courseId: number, teacherId: number): void;
 
-    enrollStudentToCourse(courseId: string, studentId: string): void;
+    enrollStudentToCourse(courseId: number, studentId: number): void;
 
 }
 

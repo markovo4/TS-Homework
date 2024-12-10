@@ -12,11 +12,8 @@ const teacher2 = new Teacher('Vlad', 'obf2007@gmail.com', '147369!')
 const math = new Course('Math', teacher1)
 const bio = new Course('Biology', teacher2)
 
-math.addStudent(student1)
-math.addStudent(student2)
-
-bio.addStudent(student1)
-bio.addStudent(student2)
+math.addStudent([student2, student1])
+bio.addStudent([student2, student1])
 
 const manager = new CourseManager([student1, student2, teacher2, teacher1], [math, bio]);
 console.log({manager})

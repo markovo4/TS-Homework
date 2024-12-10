@@ -5,8 +5,8 @@ import {User} from "./User.ts";
 import {Student} from "./Student.ts";
 
 export class CourseManager implements ICourseManager {
-    protected users: User[] = [];
-    protected courses: Course[] = [];
+    users: User[] = [];
+    courses: Course[] = [];
 
     constructor(users: User[], courses: Course[]) {
         this.users = users;
@@ -16,37 +16,44 @@ export class CourseManager implements ICourseManager {
     static generateReport(courses: Course[]): string {
         return courses
             .map((course) => {
-                const teacherInfo = `Teacher: ${course.teacher.name} (${course.teacher.emailAddress})`;
+                const teacherInfo = `Teacher: ${course.teacher.name} (${course.teacher.email})`;
                 const studentList = course
-                    .listStudents
-                    .map((student) => ` - ${student.name} (${student.emailAddress})`)
+                    .students
+                    .map((student) => ` - ${student.name} (${student.email})`)
                     .join('\n');
                 return `Course: ${course.name} (ID: ${course.courseId})\n${teacherInfo}\nStudents:\n${studentList || 'No students enrolled'}`;
             })
             .join('\n\n');
     }
 
-    addCourse(course: Course): void {
-        if (this.courses.find((c) => c.courseId === course.courseId)) {
-            throw new Error(`Course with ID ${course.courseId} already exists.`);
-        }
-        this.courses.push(course);
+    addCourse(courses: Course[]): number {
+        courses.forEach((course) => {
+            if (this.courses.find((c) => c.courseId === course.courseId)) {
+                throw new Error(`Course with ID ${course.courseId} already exists.`);
+            }
+            this.courses.push(course);
+        })
+
+        return this.courses.length;
     }
 
-    addUser(user: Student | Teacher): void {
-        if (this.users.find((u) => u.userId === user.userId)) {
-            throw new Error(`User with ID ${user.userId} already exists.`);
-        }
-        this.users.push(user);
+    addUser(users: User[]): number {
+        users.forEach((user) => {
+            if (this.users.find((u) => u.id === user.id)) {
+                throw new Error(`User with ID ${user.id} already exists.`);
+            }
+            this.users.push(user);
+        })
+        return this.users.length;
     }
 
-    assignTeacherToCourse(courseId: string, teacherId: string): void {
-        const course = this.courses.find((c) => c.courseId === courseId);
+    assignTeacherToCourse(courseId: number, teacherId: number): void {
+        const course = this.courses.find((c) => c.id === courseId);
         if (!course) {
             throw new Error(`Course with ID ${courseId} not found.`);
         }
 
-        const teacher = this.users.find((u) => u.userId === teacherId);
+        const teacher = this.users.find((u) => u.id === teacherId);
         if (!teacher) {
             throw new Error(`Teacher with ID ${teacherId} not found.`);
         }
@@ -54,16 +61,16 @@ export class CourseManager implements ICourseManager {
         course.teacher = teacher as Teacher;
     }
 
-    enrollStudentToCourse(courseId: string, studentId: string): void {
-        const course = this.courses.find((c) => c.courseId === courseId);
+    enrollStudentToCourse(courseId: number, studentId: number): void {
+        const course = this.courses.find((c) => c.id === courseId);
         if (!course) {
             throw new Error(`Course with ID ${courseId} not found.`);
         }
 
-        const student = this.users.find((u: User) => u.userId === studentId);
+        const student = this.users.find((u: User) => u.id === studentId);
         if (!student) {
             throw new Error(`Student with ID ${studentId} not found.`);
         }
-        course.addStudent(student as Student);
+        course.addStudent([student] as Student[]);
     }
 }

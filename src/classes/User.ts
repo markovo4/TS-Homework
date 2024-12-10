@@ -2,54 +2,51 @@ import {IUser} from "../interfaces/interfaces.ts";
 import {BaseModal} from "./BaseModal.ts";
 
 export class User extends BaseModal implements IUser {
-    public name: string;
-    readonly id: string;
-    private email: string;
-    private password: string;
+    private static currentId: number = 1;
+    name: string;
+    readonly id: number;
+    private userEmail: string;
+    private userPassword: string;
 
     constructor(name: string, email: string, password: string) {
         super();
         this.id = User.generateId();
         this.name = name;
-        this.email = email;
-        this.password = password;
+        this.userEmail = email;
+        this.userPassword = password;
         this.validate();
     }
 
-    get emailAddress(): string {
-        return this.email;
+    get email(): string {
+        return this.userEmail;
     }
 
-    protected set emailAddress(newEmail: string) {
+    set email(newEmail: string) {
         const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(newEmail)) throw new Error("Invalid email. Please enter a valid email address.");
-        this.email = newEmail;
+        this.userEmail = newEmail;
     }
 
-    get userId() {
-        return this.id;
+    get password(): string {
+        return this.userPassword;
     }
 
-    protected set changePassword(newPassword: string) {
+    set password(newPassword: string) {
         if (!newPassword || newPassword.trim().length < 6) throw new Error("Password must be at least 6 characters.");
-        if (!(this.pass === newPassword)) this.password = newPassword;
+        if (!(this.password === newPassword)) this.userPassword = newPassword;
     }
 
-    protected get pass(): string {
-        return this.password;
-    }
-
-    protected get info(): string {
+    get info(): string {
         return `"ID: [${this.id}], Name: [${this.name}], Email: [${this.email}]"`;
     }
 
-    private static generateId(): string {
-        return Math.random().toString(36).substring(2, 9);
+    private static generateId(): number {
+        return User.currentId++;
     }
 
     validate(): boolean {
-        return (this.name.trim() !== '' && this.email.trim() !== '' && this.password !== '');
+        return (this.name.trim() !== '' && this.email.trim() !== '' && this.userPassword !== '');
     }
 }
 
